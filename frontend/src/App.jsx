@@ -9,13 +9,18 @@ import ThemeToggle from "./components/ThemeToggle.jsx";
 import { PostSkeleton } from "./components/SkeletonLoader.jsx";
 import { useWebVitals, reportWebVitals } from "./hooks/useWebVitals.js";
 import { performanceMonitor } from "./utils/performanceMonitor.js";
+import BackButton from "./components/BackButton.jsx";
 
 // Lazy load route components for code splitting
 const Reels = lazy(() => import("./pages/Reels.jsx"));
 const ContactUs = lazy(() => import("./pages/ContactUs.jsx"));
 const CertificatePage = lazy(() => import("./pages/CertificatePage.jsx"));
-const GamifiedAssessmentPage = lazy(() => import("./pages/GamifiedAssessmentPage.jsx"));
-const AdvancedSyllabusPage = lazy(() => import("./pages/AdvancedSyllabusPage.jsx"));
+const GamifiedAssessmentPage = lazy(() =>
+  import("./pages/GamifiedAssessmentPage.jsx")
+);
+const AdvancedSyllabusPage = lazy(() =>
+  import("./pages/AdvancedSyllabusPage.jsx")
+);
 const Home = lazy(() => import("./pages/Home.jsx"));
 const CreatePost = lazy(() => import("./components/CreatePost.jsx"));
 const CoursesLanding = lazy(() => import("./pages/CoursesLanding.jsx"));
@@ -110,24 +115,24 @@ const App = () => {
 
   useEffect(() => {
     // Mark app initialization
-    performanceMonitor.mark('app-init');
-    
+    performanceMonitor.mark("app-init");
+
     // Register Service Worker
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+    if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
       navigator.serviceWorker
-        .register('/serviceWorker.js')
+        .register("/serviceWorker.js")
         .then((registration) => {
-          console.log('[SW] Registered:', registration);
+          console.log("[SW] Registered:", registration);
         })
         .catch((error) => {
-          console.error('[SW] Registration failed:', error);
+          console.error("[SW] Registration failed:", error);
         });
     }
 
     // Measure app load time
-    window.addEventListener('load', () => {
-      performanceMonitor.mark('app-loaded');
-      performanceMonitor.measure('app-load-time', 'app-init', 'app-loaded');
+    window.addEventListener("load", () => {
+      performanceMonitor.mark("app-loaded");
+      performanceMonitor.measure("app-load-time", "app-init", "app-loaded");
       performanceMonitor.report();
     });
   }, []);
@@ -251,6 +256,8 @@ const App = () => {
           }}
         />
 
+        <BackButton />
+
         <Routes>
           <Route
             path="/landing"
@@ -280,36 +287,36 @@ const App = () => {
               >
                 <Suspense fallback={<PostSkeleton />}>
                   <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <Home
-                        likedPosts={likedPosts}
-                        toggleLike={toggleLike}
-                        currentStoryIndex={currentStoryIndex}
-                        setCurrentStoryIndex={setCurrentStoryIndex}
-                        stories={stories}
-                        posts={posts}
-                        suggestedAccounts={suggestedAccounts}
-                        trendingHashtags={trendingHashtags}
-                        onlineFriends={onlineFriends}
-                      />
-                    }
-                  />
-                  <Route path="/reels" element={<Reels />} />
-                  <Route path="/create-post" element={<CreatePost />} />
-                  <Route path="/contact" element={<ContactUs />} />
-                  <Route path="/certificate" element={<CertificatePage />} />
-                  <Route
-                    path="/assessment"
-                    element={<GamifiedAssessmentPage />}
-                  />
-                  <Route path="/courses" element={<CoursesLanding />} />
-                  <Route
-                    path="/advanced-syllabus"
-                    element={<AdvancedSyllabusPage />}
-                  />
-                </Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <Home
+                          likedPosts={likedPosts}
+                          toggleLike={toggleLike}
+                          currentStoryIndex={currentStoryIndex}
+                          setCurrentStoryIndex={setCurrentStoryIndex}
+                          stories={stories}
+                          posts={posts}
+                          suggestedAccounts={suggestedAccounts}
+                          trendingHashtags={trendingHashtags}
+                          onlineFriends={onlineFriends}
+                        />
+                      }
+                    />
+                    <Route path="/reels" element={<Reels />} />
+                    <Route path="/create-post" element={<CreatePost />} />
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/certificate" element={<CertificatePage />} />
+                    <Route
+                      path="/assessment"
+                      element={<GamifiedAssessmentPage />}
+                    />
+                    <Route path="/courses" element={<CoursesLanding />} />
+                    <Route
+                      path="/advanced-syllabus"
+                      element={<AdvancedSyllabusPage />}
+                    />
+                  </Routes>
                 </Suspense>
               </MainLayout>
             }
