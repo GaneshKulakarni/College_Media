@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import LeftSidebar from '../components/LeftSidebar';
 
 const CircularProgress = ({ percentage }) => {
   const radius = 16;
@@ -62,8 +61,6 @@ const LearningMode = () => {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [completedLessons, setCompletedLessons] = useState([1, 2]);
   const [currentLessonId, setCurrentLessonId] = useState(3);
-  
-  const sidebarContainerRef = useRef(null);
 
   const course = {
     title: "Advanced React Patterns & Performance",
@@ -89,24 +86,6 @@ const LearningMode = () => {
 
   const progress = Math.round((completedLessons.length / course.totalLessons) * 100);
 
-  useEffect(() => {
-    const sidebar = sidebarContainerRef.current;
-    
-    if (isPlaying) {
-      gsap.to(sidebar, { 
-        x: -260,
-        duration: 0.6, 
-        ease: "power2.inOut" 
-      });
-    } else {
-      gsap.to(sidebar, { 
-        x: 0, 
-        duration: 0.6, 
-        ease: "power2.inOut" 
-      });
-    }
-  }, [isPlaying]);
-
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
@@ -118,43 +97,36 @@ const LearningMode = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#05050A] text-white overflow-hidden">
+    <div className="flex flex-col h-screen bg-[#05050A] text-white">
       
-      <div 
-        ref={sidebarContainerRef} 
-        className="w-64 flex-shrink-0 z-30 border-r border-white/10 bg-[#05050A]"
-      >
-        <LeftSidebar />
-      </div>
+      {/* Course Header - Below Main Navbar */}
+      <header className="h-16 border-b border-white/10 bg-[#0B0C17]/90 backdrop-blur-md flex items-center justify-between px-8 flex-shrink-0 sticky top-0 z-30">
+        <div className="flex items-center gap-4">
+           <h1 className="font-semibold text-lg text-gray-100 truncate">{course.title}</h1>
+        </div>
 
-      <div className="flex-1 flex flex-col relative z-20 min-w-0">
-        
-        <header className="h-16 border-b border-white/10 bg-[#0B0C17]/90 backdrop-blur-md flex items-center justify-between px-6 z-40">
-          <div className="flex items-center gap-4">
-             <h1 className="font-semibold text-lg text-gray-200 truncate">{course.title}</h1>
+        <div className="flex items-center gap-6">
+          <div className="flex flex-col items-end mr-2">
+             <span className="text-xs text-gray-400 uppercase tracking-wider">Progress</span>
+             <span className="text-sm font-medium">{completedLessons.length}/{course.totalLessons} Lessons</span>
           </div>
-
-          <div className="flex items-center gap-6">
-            <div className="flex flex-col items-end mr-2">
-               <span className="text-xs text-gray-400 uppercase tracking-wider">Progress</span>
-               <span className="text-sm font-medium">{completedLessons.length}/{course.totalLessons} Lessons</span>
-            </div>
-            <CircularProgress percentage={progress} />
-            
-            <button 
-              onClick={() => setDrawerOpen(!drawerOpen)}
-              className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>
-            </button>
-          </div>
-        </header>
-
-        <div className="flex-1 flex overflow-hidden">
+          <CircularProgress percentage={progress} />
           
-          <main className="flex-1 relative bg-black flex flex-col items-center justify-center p-6">
+          <button 
+            onClick={() => setDrawerOpen(!drawerOpen)}
+            className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div className="flex-1 flex overflow-hidden">
+          
+          {/* Main Content Area */}
+          <main className="flex-1 relative bg-black flex flex-col items-center justify-center p-8 overflow-y-auto">
             <div className="w-full max-w-5xl aspect-video bg-gray-900 rounded-xl overflow-hidden shadow-2xl relative group border border-white/5">
               
               <div className="absolute inset-0 flex items-center justify-center">
@@ -210,12 +182,12 @@ const LearningMode = () => {
             </div>
           </main>
 
+          {/* Course Content Sidebar */}
           <aside 
             className={`
-              fixed lg:relative right-0 top-0 bottom-0 z-30
-              w-80 bg-[#0F1118] border-l border-white/10
-              transition-transform duration-300 ease-in-out transform
-              ${drawerOpen ? 'translate-x-0' : 'translate-x-full lg:hidden'}
+              w-96 bg-[#0F1118] border-l border-white/10
+              flex-shrink-0 flex flex-col overflow-hidden
+              ${drawerOpen ? '' : 'hidden'}
             `}
           >
              <div className="p-5 border-b border-white/10 flex justify-between items-center">
@@ -272,7 +244,6 @@ const LearningMode = () => {
              </div>
           </aside>
         </div>
-      </div>
     </div>
   );
 };
