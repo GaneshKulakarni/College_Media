@@ -10,8 +10,6 @@ const LazyWrapper = ({ children }) => (
   </Suspense>
 );
 
-
-
 const Reels = lazy(() => import("../pages/Reels.jsx"));
 const ContactUs = lazy(() => import("../pages/ContactUs.jsx"));
 const CertificatePage = lazy(() => import("../pages/CertificatePage.jsx"));
