@@ -101,6 +101,17 @@ export const searchApi = {
   getTrending: () => apiClient.get('/search/trending'),
 };
 
+// Messages endpoints
+export const messagesApi = {
+  send: (data) => apiClient.post('/messages', data),
+  getConversations: (params) => apiClient.get('/messages/conversations', { params }),
+  getConversation: (userId, params) => apiClient.get(`/messages/conversation/${userId}`, { params }),
+  markAsRead: (messageId) => apiClient.put(`/messages/${messageId}/read`),
+  markAllAsRead: (userId) => apiClient.put(`/messages/conversation/${userId}/read-all`),
+  delete: (messageId) => apiClient.delete(`/messages/${messageId}`),
+  getUnreadCount: () => apiClient.get('/messages/unread/count'),
+};
+
 // Export all APIs
 export default {
   auth: authApi,
@@ -110,4 +121,5 @@ export default {
   upload: uploadApi,
   notifications: notificationsApi,
   search: searchApi,
+  messages: messagesApi,
 };
