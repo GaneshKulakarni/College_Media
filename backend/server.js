@@ -8,6 +8,9 @@ const resumeRoutes = require('./routes/resume');
 const uploadRoutes = require('./routes/upload');
 const { globalLimiter, authLimiter } = require('./middleware/rateLimiter');
 
+import { slidingWindowLimiter } from "./middleware/slidingWindowLimiter.js";
+
+
 dotenv.config();
 
 const app = express();
@@ -19,6 +22,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// 🔥 Sliding Window Rate Limiter
+app.use("/api/v1", slidingWindowLimiter);
 
 // ✅ GLOBAL RATE LIMIT (fixes bypass)
 app.use('/api', globalLimiter);
