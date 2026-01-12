@@ -8,6 +8,7 @@ const UserMock = require('../mockdb/userDB');
 const { validateRegister, validateLogin, checkValidation } = require('../middleware/validationMiddleware');
 const { sendPasswordResetOTP } = require('../services/emailService');
 const logger = require('../utils/logger');
+const { authLimiter, registerLimiter, forgotPasswordLimiter, apiLimiter } = require('../middleware/rateLimitMiddleware');
 const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "college_media_secret_key";
@@ -15,8 +16,33 @@ const JWT_SECRET = process.env.JWT_SECRET || "college_media_secret_key";
 // ⚠️ In-memory OTP store
 const otpStore = new Map();
 
-/* ---------------- REGISTER ---------------- */
-router.post("/register", validateRegister, checkValidation, async (req, res, next) => {
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      data: null,
+      message: 'Access denied. No token provided.'
+    });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.userId = decoded.userId;
+    next();
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      data: null,
+      message: 'Invalid token.'
+    });
+  }
+};
+
+// Register a new user
+router.post('/register', registerLimiter, validateRegister, checkValidation, async (req, res, next) => {
   try {
     console.log('\ud83d\udce5 Registration request received:', { 
       ...req.body, 
@@ -96,7 +122,7 @@ router.post("/register", validateRegister, checkValidation, async (req, res, nex
 });
 
 // Login user
-router.post('/login', validateLogin, checkValidation, async (req, res, next) => {
+router.post('/login', authLimiter, validateLogin, checkValidation, async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -179,8 +205,8 @@ router.post('/login', validateLogin, checkValidation, async (req, res, next) => 
   }
 );
 
-/* ---------------- FORGOT PASSWORD ---------------- */
-router.post("/forgot-password", otpRequestLimiter, async (req, res, next) => {
+// Forgot password - Send OTP
+router.post('/forgot-password', forgotPasswordLimiter, async (req, res, next) => {
   try {
     const { email } = req.body;
 
@@ -237,8 +263,8 @@ router.post("/forgot-password", otpRequestLimiter, async (req, res, next) => {
   }
 });
 
-/* ---------------- VERIFY OTP ---------------- */
-router.post("/verify-otp", otpVerifyLimiter, async (req, res, next) => {
+// Verify OTP
+router.post('/verify-otp', authLimiter, async (req, res, next) => {
   try {
     const { email, otp } = req.body;
 
@@ -298,8 +324,8 @@ router.post("/verify-otp", otpVerifyLimiter, async (req, res, next) => {
   }
 });
 
-/* ---------------- RESET PASSWORD ---------------- */
-router.post("/reset-password", passwordResetLimiter, async (req, res, next) => {
+// Reset password with verified token
+router.post('/reset-password', authLimiter, async (req, res, next) => {
   try {
     const { resetToken, newPassword, email } = req.body;
 
@@ -354,7 +380,7 @@ router.post("/reset-password", passwordResetLimiter, async (req, res, next) => {
 });
 
 // Logout endpoint
-router.post('/logout', async (req, res, next) => {
+router.post('/logout', apiLimiter, async (req, res, next) => {
   try {
     // In a production environment with refresh tokens, you would:
     // 1. Invalidate the refresh token in the database
