@@ -28,6 +28,113 @@ const verifyToken = (req, res, next) => {
 };
 
 /* =====================================================
+   GET USER PROFILE
+===================================================== */
+router.get('/profile', verifyToken, async (req, res) => {
+  try {
+    const { useMongoDB } = req.app.get('dbConnection');
+
+    const user = useMongoDB
+      ? await UserMongo.findById(req.userId).select('-password')
+      : await UserMock.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Remove password if using mock DB
+    const { password, ...userWithoutPassword } = user;
+
+    res.json({
+      success: true,
+      data: useMongoDB ? user : userWithoutPassword
+    });
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ success: false, message: 'Error fetching profile' });
+  }
+});
+
+/* =====================================================
+   UPDATE USER PROFILE
+===================================================== */
+router.put('/profile', verifyToken, async (req, res) => {
+  try {
+    const { firstName, lastName, username, bio, email } = req.body;
+    const { useMongoDB } = req.app.get('dbConnection');
+
+    // Validate input
+    if (username && (username.length < 3 || username.length > 30)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Username must be between 3 and 30 characters'
+      });
+    }
+
+    if (bio && bio.length > 500) {
+      return res.status(400).json({
+        success: false,
+        message: 'Bio must not exceed 500 characters'
+      });
+    }
+
+    // Check if username is taken by another user
+    if (username) {
+      const existingUser = useMongoDB
+        ? await UserMongo.findOne({ username, _id: { $ne: req.userId } })
+        : await UserMock.findByUsername(username);
+
+      if (existingUser && existingUser._id.toString() !== req.userId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Username is already taken'
+        });
+      }
+    }
+
+    const updateData = {
+      firstName,
+      lastName,
+      username,
+      bio,
+      email,
+      updatedAt: new Date().toISOString()
+    };
+
+    // Remove undefined values
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] === undefined) {
+        delete updateData[key];
+      }
+    });
+
+    const updatedUser = useMongoDB
+      ? await UserMongo.findByIdAndUpdate(
+          req.userId,
+          { $set: updateData },
+          { new: true }
+        ).select('-password')
+      : await UserMock.update(req.userId, updateData);
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Remove password if using mock DB
+    const { password, ...userWithoutPassword } = updatedUser;
+
+    res.json({
+      success: true,
+      message: 'Profile updated successfully',
+      data: useMongoDB ? updatedUser : userWithoutPassword
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ success: false, message: 'Error updating profile' });
+  }
+});
+
+/* =====================================================
    DELETE ACCOUNT (SOFT DELETE)
    ✔ Transaction
    ✔ Optimistic Locking
