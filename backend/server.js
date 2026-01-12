@@ -4,8 +4,7 @@
  *  Timeout-Safe | Large-File Ready
  *  Production Hardened
  * ================================
- 
-// TEMP CHANGE for ISSUE-479
+ */
 
 const express = require("express");
 const cors = require("cors");
@@ -13,26 +12,25 @@ const dotenv = require("dotenv");
 const path = require("path");
 const http = require("http");
 const os = require("os");
-const { startEventLoopMonitor } = require("./utils/eventLoopMonitor");
 
 /* ------------------
    🔧 INTERNAL IMPORTS
 ------------------ */
-// 🔐 Security Headers
 const helmet = require("helmet");
 const securityHeaders = require("./config/securityHeaders");
 
-
 const { initDB } = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+
 const resumeRoutes = require("./routes/resume");
 const uploadRoutes = require("./routes/upload");
+
 const { globalLimiter, authLimiter } = require("./middleware/rateLimiter");
 const { slidingWindowLimiter } = require("./middleware/slidingWindowLimiter");
 const { warmUpCache } = require("./utils/cache");
 const logger = require("./utils/logger");
 
-// 🔍 Observability & Metrics
+// 🔍 Observability
 const metricsMiddleware = require("./middleware/metrics.middleware");
 const { client: metricsClient } = require("./utils/metrics");
 
@@ -43,61 +41,18 @@ dotenv.config();
 
 const ENV = process.env.NODE_ENV || "development";
 const PORT = process.env.PORT || 5000;
+const METRICS_TOKEN = process.env.METRICS_TOKEN || "metrics-secret";
 
 const app = express();
 const server = http.createServer(app);
 
 app.disable("x-powered-by");
 
-/* =================================================
-   🚩 FEATURE FLAGS
-================================================= */
-const FEATURE_FLAGS = Object.freeze({
-  ENABLE_EXPERIMENTAL_RESUME: ENV !== "production",
-  ENABLE_NEW_MESSAGING_FLOW: ENV !== "production",
-  ENABLE_DEBUG_LOGS: ENV !== "production",
-  ENABLE_STRICT_RATE_LIMITING: ENV === "production",
-  ENABLE_VERBOSE_ERRORS: ENV !== "production",
-});
 /* ------------------
-   📊 OBSERVABILITY – REQUEST METRICS
+   🔐 SECURITY HEADERS (HELMET)
 ------------------ */
-app.use(metricsMiddleware);
-/* ---------- Feature Flag Validation ---------- */
-(() => {
-  Object.entries(FEATURE_FLAGS).forEach(([k, v]) => {
-    if (typeof v !== "boolean") {
-      logger.critical("Invalid feature flag", { k, v });
-      process.exit(1);
-    }
-  });
+app.use(helmet(securityHeaders(ENV)));
 
-  if (
-    ENV === "production" &&
-    (FEATURE_FLAGS.ENABLE_EXPERIMENTAL_RESUME ||
-      FEATURE_FLAGS.ENABLE_NEW_MESSAGING_FLOW)
-  ) {
-    logger.critical("Unsafe feature flags enabled in production");
-    process.exit(1);
-  }
-
-  logger.info("Feature flags loaded", { env: ENV, FEATURE_FLAGS });
-})();
-/* ------------------
-   📈 PROMETHEUS METRICS
------------------- */
-app.get("/metrics", async (req, res) => {
-  try {
-    res.set("Content-Type", metricsClient.register.contentType);
-    res.end(await metricsClient.register.metrics());
-  } catch (err) {
-    logger.error("Metrics endpoint failed", { error: err.message });
-    res.status(500).json({
-      success: false,
-      message: "Failed to load metrics",
-    });
-  }
-});
 /* ------------------
    🌍 CORS
 ------------------ */
@@ -114,6 +69,11 @@ app.use(
 ------------------ */
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
+
+/* ------------------
+   📊 OBSERVABILITY – REQUEST METRICS
+------------------ */
+app.use(metricsMiddleware);
 
 /* ------------------
    ⏱️ REQUEST TIMEOUT GUARD
@@ -157,7 +117,7 @@ app.use((req, res, next) => {
    ⏱️ RATE LIMITING
 ------------------ */
 app.use("/api", slidingWindowLimiter);
-if (FEATURE_FLAGS.ENABLE_STRICT_RATE_LIMITING) {
+if (ENV === "production") {
   app.use("/api", globalLimiter);
 }
 
@@ -187,6 +147,31 @@ app.get("/", (req, res) => {
 });
 
 /* ------------------
+   📈 PROMETHEUS METRICS (SECURED)
+------------------ */
+app.get("/metrics", async (req, res) => {
+  const token = req.headers["x-metrics-token"];
+
+  if (ENV === "production" && token !== METRICS_TOKEN) {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden",
+    });
+  }
+
+  try {
+    res.set("Content-Type", metricsClient.register.contentType);
+    res.end(await metricsClient.register.metrics());
+  } catch (err) {
+    logger.error("Metrics endpoint failed", { error: err.message });
+    res.status(500).json({
+      success: false,
+      message: "Failed to load metrics",
+    });
+  }
+});
+
+/* ------------------
    🚀 START SERVER
 ------------------ */
 let dbConnection = null;
@@ -211,17 +196,9 @@ const startServer = async () => {
   /* ---------- ROUTES ---------- */
   app.use("/api/auth", authLimiter, require("./routes/auth"));
   app.use("/api/users", require("./routes/users"));
-
-  if (FEATURE_FLAGS.ENABLE_EXPERIMENTAL_RESUME) {
-    app.use("/api/resume", resumeRoutes);
-  }
-
+  app.use("/api/resume", resumeRoutes);
   app.use("/api/upload", uploadRoutes);
-
-  if (FEATURE_FLAGS.ENABLE_NEW_MESSAGING_FLOW) {
-    app.use("/api/messages", require("./routes/messages"));
-  }
-
+  app.use("/api/messages", require("./routes/messages"));
   app.use("/api/account", require("./routes/account"));
 
   app.use(notFound);
