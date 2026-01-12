@@ -6,6 +6,7 @@ const UserMock = require('../mockdb/userDB');
 const { validateMessage, validateMessageId, checkValidation } = require('../middleware/validationMiddleware');
 const logger = require('../utils/logger');
 const { apiLimiter } = require('../middleware/rateLimitMiddleware');
+const { isValidMessageContent, isValidURL, isValidObjectId } = require('../utils/validators');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
@@ -47,6 +48,34 @@ const verifyToken = (req, res, next) => {
 router.post('/', verifyToken, validateMessage, checkValidation, async (req, res) => {
   try {
     const { receiver, content, messageType, attachmentUrl } = req.body;
+
+    // Validate message content
+    if (!isValidMessageContent(content)) {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Message content must be 1-2000 characters'
+      });
+    }
+
+    // Validate receiver ID format
+    if (!isValidObjectId(receiver)) {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Invalid receiver ID format'
+      });
+    }
+
+    // Validate attachment URL if provided
+    if (attachmentUrl && !isValidURL(attachmentUrl)) {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Invalid attachment URL format'
+      });
+    }
+
     const dbConnection = req.app.get('dbConnection');
     const useMongoDB = dbConnection?.useMongoDB;
 

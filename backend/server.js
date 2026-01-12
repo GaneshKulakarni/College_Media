@@ -6,6 +6,7 @@ const { initDB } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const logger = require('./utils/logger');
 const { globalLimiter } = require('./middleware/rateLimitMiddleware');
+const { sanitizeAll, validateContentType, preventParameterPollution } = require('./middleware/sanitizationMiddleware');
 
 dotenv.config();
 
@@ -19,6 +20,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Apply global rate limiter
 app.use(globalLimiter);
+
+// Apply input sanitization (XSS & NoSQL injection protection)
+app.use(sanitizeAll);
+
+// Validate Content-Type for POST/PUT/PATCH requests
+app.use(validateContentType);
+
+// Prevent parameter pollution
+app.use(preventParameterPollution(['tags', 'categories'])); // Allow arrays for specific params
 
 // Static file serving for uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

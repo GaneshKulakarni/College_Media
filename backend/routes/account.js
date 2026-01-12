@@ -9,6 +9,7 @@ const MessageMock = require('../mockdb/messageDB');
 const { validateAccountDeletion, checkValidation } = require('../middleware/validationMiddleware');
 const logger = require('../utils/logger');
 const { sensitiveLimiter, apiLimiter } = require('../middleware/rateLimitMiddleware');
+const { isValidPassword } = require('../utils/validators');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'college_media_secret_key';
 

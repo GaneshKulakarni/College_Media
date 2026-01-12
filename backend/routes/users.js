@@ -8,6 +8,7 @@ const multer = require('multer');
 const path = require('path');
 const logger = require('../utils/logger');
 const { apiLimiter } = require('../middleware/rateLimitMiddleware');
+const { isValidName, isValidBio, isValidEmail } = require('../utils/validators');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'college_media_secret_key';
 
@@ -112,6 +113,31 @@ router.get('/profile', verifyToken, async (req, res, next) => {
 router.put('/profile', verifyToken, validateProfileUpdate, checkValidation, async (req, res, next) => {
   try {
     const { firstName, lastName, bio } = req.body;
+
+    // Validate inputs
+    if (firstName && !isValidName(firstName)) {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Invalid first name format (1-50 characters, letters only)'
+      });
+    }
+
+    if (lastName && !isValidName(lastName)) {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Invalid last name format (1-50 characters, letters only)'
+      });
+    }
+
+    if (bio && !isValidBio(bio)) {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Bio must be 500 characters or less'
+      });
+    }
 
     // Get database connection from app
     const dbConnection = req.app.get('dbConnection');
