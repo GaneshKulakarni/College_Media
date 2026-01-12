@@ -45,6 +45,7 @@ const StudyBuddyMatcher = lazy(() => import("../pages/StudyBuddyMatcher.jsx"));
 const InstructorDashboard = lazy(() => import("../pages/InstructorDashboard.jsx"));
 const ResumeBuilder = lazy(() => import("../pages/ResumeBuilder.jsx"));
 const AlumniResumeReview = lazy(() => import("../pages/AlumniResumeReview.jsx"));
+const AlumniConnect = lazy(() => import("../pages/AlumniConnect.jsx"));
 const NotFound = lazy(() => import("../pages/NotFound.jsx"));
 
 // Protected Route wrapper
@@ -119,6 +120,15 @@ const AppRoutes = ({
           element={
               <LazyWrapper>
                   <AlumniResumeReview />
+              </LazyWrapper>
+          }
+      />
+
+      <Route
+          path="alumni-connect"
+          element={
+              <LazyWrapper>
+                  <AlumniConnect />
               </LazyWrapper>
           }
       />
