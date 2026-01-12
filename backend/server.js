@@ -2,6 +2,7 @@
  * ================================
  *  College Media – Backend Server
  *  Timeout-Safe | Large-File Ready
+ *  Background-Job Hardened
  *  Production Hardened
  * ================================
  */
@@ -34,6 +35,9 @@ const logger = require("./utils/logger");
 const metricsMiddleware = require("./middleware/metrics.middleware");
 const { client: metricsClient } = require("./utils/metrics");
 
+// 🔁 Background Job
+const sampleJob = require("./jobs/sampleJob");
+
 /* ------------------
    🌱 ENV SETUP
 ------------------ */
@@ -49,7 +53,7 @@ const server = http.createServer(app);
 app.disable("x-powered-by");
 
 /* ------------------
-   🔐 SECURITY HEADERS (HELMET)
+   🔐 SECURITY HEADERS
 ------------------ */
 app.use(helmet(securityHeaders(ENV)));
 
@@ -71,7 +75,7 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 
 /* ------------------
-   📊 OBSERVABILITY – REQUEST METRICS
+   📊 OBSERVABILITY
 ------------------ */
 app.use(metricsMiddleware);
 
@@ -147,16 +151,13 @@ app.get("/", (req, res) => {
 });
 
 /* ------------------
-   📈 PROMETHEUS METRICS (SECURED)
+   📈 METRICS
 ------------------ */
 app.get("/metrics", async (req, res) => {
   const token = req.headers["x-metrics-token"];
 
   if (ENV === "production" && token !== METRICS_TOKEN) {
-    return res.status(403).json({
-      success: false,
-      message: "Forbidden",
-    });
+    return res.status(403).json({ success: false, message: "Forbidden" });
   }
 
   try {
@@ -164,12 +165,28 @@ app.get("/metrics", async (req, res) => {
     res.end(await metricsClient.register.metrics());
   } catch (err) {
     logger.error("Metrics endpoint failed", { error: err.message });
-    res.status(500).json({
-      success: false,
-      message: "Failed to load metrics",
-    });
+    res.status(500).json({ success: false, message: "Metrics error" });
   }
 });
+
+/* ------------------
+   🔁 BACKGROUND JOB BOOTSTRAP
+------------------ */
+const startBackgroundJobs = () => {
+  logger.info("Starting background jobs");
+
+  setImmediate(async () => {
+    try {
+      await sampleJob.run({ shouldFail: false });
+      logger.info("Background job executed successfully");
+    } catch (err) {
+      logger.error("Background job execution failed", {
+        job: "sample_background_job",
+        error: err.message,
+      });
+    }
+  });
+};
 
 /* ------------------
    🚀 START SERVER
@@ -185,13 +202,16 @@ const startServer = async () => {
     process.exit(1);
   }
 
-  /* 🔥 CACHE WARM-UP (NON-BLOCKING) */
+  /* 🔥 CACHE WARM-UP */
   setImmediate(() => {
     warmUpCache({
       User: require("./models/User"),
       Resume: require("./models/Resume"),
     });
   });
+
+  /* 🔁 BACKGROUND JOBS */
+  startBackgroundJobs();
 
   /* ---------- ROUTES ---------- */
   app.use("/api/auth", authLimiter, require("./routes/auth"));
@@ -204,7 +224,7 @@ const startServer = async () => {
   app.use(notFound);
   app.use(errorHandler);
 
-  /* ---------- SERVER TIMEOUT TUNING ---------- */
+  /* ---------- SERVER TIMEOUTS ---------- */
   server.keepAliveTimeout = 120000;
   server.headersTimeout = 130000;
   server.requestTimeout = 0;
