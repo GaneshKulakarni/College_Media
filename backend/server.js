@@ -14,6 +14,11 @@ require('./utils/redisClient'); // Initialize Redis client
 /* ------------------
    🔧 INTERNAL IMPORTS
 ------------------ */
+// 🔐 Security Headers
+const helmet = require("helmet");
+const securityHeaders = require("./config/securityHeaders");
+
+
 const { initDB } = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const resumeRoutes = require("./routes/resume");
