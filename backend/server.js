@@ -12,6 +12,7 @@ const logger = require('./utils/logger');
 const { globalLimiter } = require('./middleware/rateLimitMiddleware');
 const { sanitizeAll, validateContentType, preventParameterPollution } = require('./middleware/sanitizationMiddleware');
 const { setupSwagger } = require('./config/swagger');
+const passport = require('./config/passport');
 require('./utils/redisClient'); // Initialize Redis client
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use(compression()); // Compress all responses
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 
 // Apply global rate limiter
 // conditional check for test environment to avoid rate limits during testing
