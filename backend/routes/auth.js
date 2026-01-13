@@ -167,6 +167,8 @@ router.post('/register', registerLimiter, validateRegister, checkValidation, asy
           JWT_SECRET,
           { expiresIn: '7d' }
         );
+        // Send welcome email notification
+        NotificationService.sendWelcomeEmail(newUser).catch(err => logger.error('Welcome email failed:', err));
 
         res.status(201).json({
           success: true,
