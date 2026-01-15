@@ -98,6 +98,10 @@ initWhiteboardSockets(io);
 const initSignalingSockets = require("./sockets/signaling");
 initSignalingSockets(io);
 
+// Initialize Code Editor Sockets
+const initCodeEditorSockets = require("./sockets/codeEditor");
+initCodeEditorSockets(io);
+
 if (TRUST_PROXY) app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
