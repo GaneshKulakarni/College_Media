@@ -17,8 +17,8 @@ function Navbar() {
   const { user } = useAuth();
 
   return (
-    <nav 
-      className="sticky top-0 z-50 ml-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-colors duration-300"
+    <nav
+      className="sticky top-0 z-50 ml-20 bg-bg-secondary/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-border dark:border-gray-700 transition-colors duration-300"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -60,7 +60,7 @@ function Navbar() {
                   aria-haspopup="true"
                 >
                   <svg
-                    className="w-6 h-6 text-gray-600"
+                    className="w-6 h-6 text-text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -89,3 +89,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

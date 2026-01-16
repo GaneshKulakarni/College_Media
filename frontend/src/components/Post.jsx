@@ -45,7 +45,7 @@ const Post = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+    <div className="bg-bg-secondary rounded-lg shadow-md overflow-hidden mb-6">
       {/* Header */}
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center">
@@ -56,7 +56,7 @@ const Post = ({
           />
           <div>
             <h3 className="font-semibold">{post.user.username}</h3>
-            <p className="text-xs text-gray-500">{post.timestamp}</p>
+            <p className="text-xs text-text-muted">{post.timestamp}</p>
           </div>
         </div>
 
@@ -76,7 +76,7 @@ const Post = ({
                 className="fixed inset-0 z-10"
                 onClick={() => setShowMenu(false)}
               />
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-20">
+              <div className="absolute right-0 mt-2 w-48 bg-bg-secondary rounded-lg shadow-lg border border-border py-2 z-20">
                 <ReportButton
                   contentType="post"
                   contentId={post.id}
@@ -119,7 +119,7 @@ const Post = ({
             {post.liked ? (
               <FaHeart className="text-red-500" />
             ) : (
-              <FaRegHeart className="text-gray-700" />
+              <FaRegHeart className="text-text-secondary" />
             )}
             <span className={isLiking ? 'opacity-70' : ''}>{likes}</span>
           </button>
@@ -146,3 +146,4 @@ const Post = ({
 };
 
 export default Post;
+

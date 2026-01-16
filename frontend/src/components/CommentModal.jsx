@@ -148,13 +148,13 @@ const CommentModal = ({ isOpen, onClose, postId, commentCount }) => {
   return (
     <div
       className={`fixed top-0 right-0 z-[1000] h-full w-full lg:w-[450px] shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'
-        } ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-white text-gray-900'}`}
+        } ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-bg-secondary text-text-primary'}`}
     >
       {/* Header */}
       <div className="flex justify-between items-center p-6 border-b dark:border-slate-800 border-gray-100">
         <div>
           <h3 id="modal-title" className="text-xl font-bold">Comments</h3>
-          <p className="text-sm text-gray-500">{commentCount} responses</p>
+          <p className="text-sm text-text-muted">{commentCount} responses</p>
         </div>
         <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,13 +170,13 @@ const CommentModal = ({ isOpen, onClose, postId, commentCount }) => {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
           </div>
         ) : comments.length === 0 ? (
-          <div className="text-center py-20 text-gray-500"><p>No comments yet.</p></div>
+          <div className="text-center py-20 text-text-muted"><p>No comments yet.</p></div>
         ) : (
           comments.map((comment, idx) => (
             <div key={idx} className="flex gap-4">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 shrink-0" />
               <div className="flex-1">
-                <div className={`p-4 rounded-2xl rounded-tl-none ${theme === 'dark' ? 'bg-slate-800' : 'bg-gray-50'}`}>
+                <div className={`p-4 rounded-2xl rounded-tl-none ${theme === 'dark' ? 'bg-slate-800' : 'bg-bg-primary'}`}>
                   <p className="text-sm font-bold text-purple-600">@{comment.user?.username || "user"}</p>
                   <p className="text-sm mt-1 leading-relaxed">{comment.content}</p>
                 </div>
@@ -198,7 +198,7 @@ const CommentModal = ({ isOpen, onClose, postId, commentCount }) => {
               onChange={handleCommentChange}
               onBlur={stopTyping}
               placeholder="Write a comment..."
-              className={`w-full p-4 h-24 rounded-2xl resize-none outline-none border-none text-sm ${theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-gray-100 text-gray-900'
+              className={`w-full p-4 h-24 rounded-2xl resize-none outline-none border-none text-sm ${theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-gray-100 text-text-primary'
                 }`}
             />
             <div className="flex justify-end">

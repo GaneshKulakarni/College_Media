@@ -121,7 +121,7 @@ const CreatePost = ({ onPostCreated }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+    <div className="bg-bg-secondary rounded-lg shadow-md overflow-hidden mb-6">
       <div className="p-4">
         <h2 id="create-post-heading" className="sr-only">Create New Post</h2>
         <div className="flex items-center mb-4">
@@ -131,7 +131,7 @@ const CreatePost = ({ onPostCreated }) => {
             className="w-10 h-10 rounded-full object-cover mr-3"
           />
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">{user?.username}</h3>
+            <h3 className="font-semibold text-text-primary">{user?.username}</h3>
           </div>
         </div>
 
@@ -143,7 +143,7 @@ const CreatePost = ({ onPostCreated }) => {
               value={caption}
               onChange={handleCaptionChange}
               placeholder="What's happening?"
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+              className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
               rows="3"
               maxLength={maxLength}
               aria-describedby="char-counter"
@@ -159,7 +159,7 @@ const CreatePost = ({ onPostCreated }) => {
                   ? 'text-red-600 font-bold'
                   : caption.length > maxLength * 0.8
                     ? 'text-yellow-600 font-medium'
-                    : 'text-gray-500'
+                    : 'text-text-muted'
                 }`}
               aria-live="polite"
               aria-atomic="true"
@@ -205,7 +205,7 @@ const CreatePost = ({ onPostCreated }) => {
                 <div className="flex items-center gap-2 flex-1">
                   <Icon icon="mdi:poll" className="text-indigo-500 text-xl" />
                   <div>
-                    <p className="font-medium text-gray-900">{pollData.question}</p>
+                    <p className="font-medium text-text-primary">{pollData.question}</p>
                     <p className="text-sm text-gray-600">
                       {pollData.options.length} options • {pollData.duration && pollData.durationUnit ? `${pollData.duration} ${pollData.durationUnit}` : 'No expiry'}
                     </p>

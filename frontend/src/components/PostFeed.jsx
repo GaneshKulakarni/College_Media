@@ -261,8 +261,8 @@ const PostFeed = () => {
 
       {/* Posts Display */}
       {filteredAndSortedPosts.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <p className="text-gray-500 text-lg">No posts found</p>
+        <div className="bg-bg-secondary rounded-lg shadow-md p-8 text-center">
+          <p className="text-text-muted text-lg">No posts found</p>
           <p className="text-gray-400 text-sm mt-2">
             Try adjusting your search or filters
           </p>
@@ -299,7 +299,7 @@ const PostFeed = () => {
 
           {/* End of Feed Message */}
           {!hasMore && posts.length > 0 && (
-            <div className="text-center py-8 text-gray-500 text-sm">
+            <div className="text-center py-8 text-text-muted text-sm">
               You've reached the end of the feed! 🎉
             </div>
           )}
@@ -309,3 +309,4 @@ const PostFeed = () => {
   );
 };
 export default PostFeed;
+

@@ -83,12 +83,12 @@ const NotificationCenter = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-bg-primary dark:bg-gray-950">
       <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-6 mb-6">
+        <div className="bg-bg-secondary dark:bg-gray-900 rounded-lg shadow-sm border border-border dark:border-gray-800 p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-text-primary dark:text-white flex items-center gap-2">
               <Icon icon="mdi:bell" width={28} />
               Notifications
               {unreadCount > 0 && (
@@ -131,7 +131,7 @@ const NotificationCenter = () => {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-colors ${
                   filter === f.value
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    : 'bg-gray-100 dark:bg-gray-800 text-text-secondary dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
                 <Icon icon={f.icon} width={18} />
@@ -142,7 +142,7 @@ const NotificationCenter = () => {
         </div>
 
         {/* Notifications List */}
-        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+        <div className="bg-bg-secondary dark:bg-gray-900 rounded-lg shadow-sm border border-border dark:border-gray-800 overflow-hidden">
           {contextLoading ? (
             <div className="flex items-center justify-center py-12">
               <Icon icon="mdi:loading" width={32} className="animate-spin text-blue-600" />
@@ -154,10 +154,10 @@ const NotificationCenter = () => {
                 width={64} 
                 className="text-gray-400 dark:text-gray-600 mb-4"
               />
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-white mb-2">
                 No notifications yet
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 text-center max-w-sm">
+              <p className="text-text-muted dark:text-gray-400 text-center max-w-sm">
                 {filter === 'all' 
                   ? "You're all caught up! We'll notify you when something happens."
                   : `No ${filter} notifications to show.`}
@@ -176,7 +176,7 @@ const NotificationCenter = () => {
 
               {/* Load More */}
               {hasMore && (
-                <div className="p-4 text-center border-t border-gray-200 dark:border-gray-800">
+                <div className="p-4 text-center border-t border-border dark:border-gray-800">
                   {loading ? (
                     <Icon icon="mdi:loading" width={24} className="animate-spin text-blue-600 mx-auto" />
                   ) : (
@@ -198,3 +198,4 @@ const NotificationCenter = () => {
 };
 
 export default NotificationCenter;
+

@@ -140,7 +140,7 @@ const Home = () => {
   return (
     <main id="main-content" role="main" className="space-y-6">
       {/* STORIES SECTION */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+      <div className="bg-bg-secondary dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 p-4">
         <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
           {stories.map((story) => (
             <div
@@ -156,7 +156,7 @@ const Home = () => {
                   story.isAddStory ? "p-0" : "p-0.5"
                 } rounded-full transition-transform group-hover:scale-105`}
               >
-                <div className="bg-white dark:bg-slate-800 rounded-full p-0.5">
+                <div className="bg-bg-secondary dark:bg-slate-800 rounded-full p-0.5">
                   <img
                     src={story.avatar}
                     alt={story.username}
@@ -164,7 +164,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <span className="text-xs text-center text-slate-700 dark:text-slate-300 font-medium truncate w-full">
+              <span className="text-xs text-center text-text-secondary dark:text-slate-300 font-medium truncate w-full">
                 {story.username}
               </span>
             </div>
@@ -173,9 +173,9 @@ const Home = () => {
       </div>
 
       {/* Reels Section */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5">
+      <div className="bg-bg-secondary dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-text-primary dark:text-slate-100 flex items-center gap-2">
             <span className="text-2xl">🎬</span> Reels
           </h2>
           <button className="text-indigo-600 dark:text-indigo-400 text-sm font-medium hover:underline">
@@ -226,7 +226,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-200">
-                <div className="absolute top-2 right-2 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-2 right-2 w-8 h-8 bg-bg-secondary/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                   </svg>
@@ -244,7 +244,7 @@ const Home = () => {
           onClick={() => setActiveReelIndex(null)}
         >
           <button
-            className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white z-10"
+            className="absolute top-4 right-4 w-10 h-10 bg-bg-secondary/10 hover:bg-bg-secondary/20 rounded-full flex items-center justify-center text-white z-10"
             onClick={() => setActiveReelIndex(null)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -299,8 +299,8 @@ const Home = () => {
                     }}
                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                       reelsData[activeReelIndex].isFollowed
-                        ? 'bg-white/20 text-white border border-white'
-                        : 'bg-white text-black'
+                        ? 'bg-bg-secondary/20 text-white border border-white'
+                        : 'bg-bg-secondary text-black'
                     }`}
                   >
                     {reelsData[activeReelIndex].isFollowed ? 'Following' : 'Follow'}
@@ -324,7 +324,7 @@ const Home = () => {
                   }}
                   className="flex flex-col items-center gap-1"
                 >
-                  <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-bg-secondary/10 backdrop-blur-sm rounded-full flex items-center justify-center">
                     {reelsData[activeReelIndex].isLiked ? (
                       <svg className="w-7 h-7 text-red-500" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -343,7 +343,7 @@ const Home = () => {
                 </button>
 
                 <button className="flex flex-col items-center gap-1">
-                  <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-bg-secondary/10 backdrop-blur-sm rounded-full flex items-center justify-center">
                     <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
@@ -352,7 +352,7 @@ const Home = () => {
                 </button>
 
                 <button className="flex flex-col items-center gap-1">
-                  <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-bg-secondary/10 backdrop-blur-sm rounded-full flex items-center justify-center">
                     <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                     </svg>
@@ -364,7 +364,7 @@ const Home = () => {
               {activeReelIndex > 0 && (
                 <button
                   onClick={() => setActiveReelIndex(activeReelIndex - 1)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-bg-secondary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-bg-secondary/20"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -375,7 +375,7 @@ const Home = () => {
               {activeReelIndex < reelsData.length - 1 && (
                 <button
                   onClick={() => setActiveReelIndex(activeReelIndex + 1)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-bg-secondary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-bg-secondary/20"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -394,7 +394,7 @@ const Home = () => {
           className={`px-4 py-2 rounded-full text-sm font-medium ${
             sortType === "latest"
               ? "bg-indigo-600 text-white"
-              : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200"
+              : "bg-slate-100 dark:bg-slate-700 text-text-secondary dark:text-slate-200"
           }`}
         >
           Latest
@@ -404,7 +404,7 @@ const Home = () => {
           className={`px-4 py-2 rounded-full text-sm font-medium ${
             sortType === "likes"
               ? "bg-indigo-600 text-white"
-              : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200"
+              : "bg-slate-100 dark:bg-slate-700 text-text-secondary dark:text-slate-200"
           }`}
         >
           Most Liked
@@ -413,15 +413,15 @@ const Home = () => {
 
       {/* 🔥 TRENDING POSTS SECTION */}
       {!loading && trendingPosts.length > 0 && (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5">
-          <h2 className="text-lg font-bold mb-4 text-slate-900 dark:text-slate-100">
+        <div className="bg-bg-secondary dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 p-5">
+          <h2 className="text-lg font-bold mb-4 text-text-primary dark:text-slate-100">
             🔥 Trending Now
           </h2>
           <div className="space-y-4">
             {trendingPosts.map((post) => (
               <div
                 key={post.id}
-                className="flex gap-4 items-center p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700"
+                className="flex gap-4 items-center p-3 rounded-xl hover:bg-bg-primary dark:hover:bg-slate-700"
               >
                 <img
                   src={post.media}
@@ -429,7 +429,7 @@ const Home = () => {
                   className="w-24 h-16 object-cover rounded-lg"
                 />
                 <div className="flex-1">
-                  <p className="font-semibold line-clamp-2 text-slate-900 dark:text-slate-100">
+                  <p className="font-semibold line-clamp-2 text-text-primary dark:text-slate-100">
                     {post.caption}
                   </p>
                   <p className="text-sm text-slate-600 dark:text-slate-300">
@@ -453,7 +453,7 @@ const Home = () => {
         sortedPosts.map((post) => (
           <div
             key={post.id}
-            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5"
+            className="bg-bg-secondary dark:bg-slate-800 rounded-2xl border border-border dark:border-slate-700 p-5"
           >
             <div className="flex items-center gap-3">
               <img
@@ -462,7 +462,7 @@ const Home = () => {
                 className="w-12 h-12 rounded-full"
               />
               <div>
-                <p className="font-bold text-slate-900 dark:text-slate-100">
+                <p className="font-bold text-text-primary dark:text-slate-100">
                   {post.user.username}
                 </p>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
@@ -471,7 +471,7 @@ const Home = () => {
               </div>
             </div>
 
-            <p className="mt-4 text-slate-900 dark:text-slate-100">
+            <p className="mt-4 text-text-primary dark:text-slate-100">
               {post.caption}
             </p>
 
@@ -481,7 +481,7 @@ const Home = () => {
               className="mt-4 rounded-xl w-full"
             />
 
-            <div className="flex gap-6 mt-4 text-sm text-slate-700 dark:text-slate-200">
+            <div className="flex gap-6 mt-4 text-sm text-text-secondary dark:text-slate-200">
               <button
                 onClick={() => toggleLike(post.id)}
                 className="hover:text-red-500 transition-colors duration-200"
@@ -503,3 +503,4 @@ const Home = () => {
 };
 
 export default Home;
+

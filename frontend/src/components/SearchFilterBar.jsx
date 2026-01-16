@@ -13,7 +13,7 @@ const SearchFilterBar = ({
   const hasActiveFilters = searchQuery || sortBy !== "newest" || filterType !== "all";
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div className="bg-bg-secondary rounded-lg shadow-md p-4 mb-6">
       {/* Search Input */}
       <div className="relative mb-4">
         <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -30,7 +30,7 @@ const SearchFilterBar = ({
       <div className="flex flex-wrap gap-3 items-center">
         {/* Sort By */}
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Sort:</label>
+          <label className="text-sm font-medium text-text-secondary">Sort:</label>
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
@@ -45,7 +45,7 @@ const SearchFilterBar = ({
 
         {/* Filter Type */}
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Filter:</label>
+          <label className="text-sm font-medium text-text-secondary">Filter:</label>
           <select
             value={filterType}
             onChange={(e) => onFilterChange(e.target.value)}
@@ -80,3 +80,4 @@ const SearchFilterBar = ({
 };
 
 export default SearchFilterBar;
+

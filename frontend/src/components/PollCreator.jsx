@@ -71,12 +71,12 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg border-2 border-indigo-200 p-4 my-3">
+    <div className="bg-bg-secondary rounded-lg border-2 border-indigo-200 p-4 my-3">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Icon icon="mdi:poll" className="text-indigo-500 text-2xl" />
-          <h3 className="font-semibold text-gray-900">Create Poll</h3>
+          <h3 className="font-semibold text-text-primary">Create Poll</h3>
         </div>
         <button
           onClick={onCancel}
@@ -88,7 +88,7 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
 
       {/* Question Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-text-secondary mb-2">
           Poll Question
         </label>
         <input
@@ -106,7 +106,7 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
           <p className="text-red-500 text-xs mt-1">{errors.question}</p>
         )}
         <div className="flex justify-between mt-1">
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-text-muted">
             {question.length}/200
           </span>
         </div>
@@ -114,13 +114,13 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
 
       {/* Options */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-text-secondary mb-2">
           Poll Options (2-6)
         </label>
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="flex items-center gap-2">
-              <span className="text-gray-500 font-medium min-w-[1.5rem]">
+              <span className="text-text-muted font-medium min-w-[1.5rem]">
                 {index + 1}.
               </span>
               <input
@@ -161,7 +161,7 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
       <div className="mb-4 space-y-3">
         {/* Duration */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-text-secondary mb-2">
             Poll Duration
           </label>
           <select
@@ -188,14 +188,14 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
             onChange={(e) => setAllowVoteChange(e.target.checked)}
             className="w-4 h-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
           />
-          <label htmlFor="allowVoteChange" className="text-sm text-gray-700">
+          <label htmlFor="allowVoteChange" className="text-sm text-text-secondary">
             Allow users to change their vote
           </label>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center gap-2 pt-3 border-t border-gray-200">
+      <div className="flex items-center gap-2 pt-3 border-t border-border">
         <button
           onClick={handleSubmit}
           className="flex-1 py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
@@ -205,7 +205,7 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
         </button>
         <button
           onClick={onCancel}
-          className="px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors"
+          className="px-4 py-2 border border-gray-300 hover:bg-bg-primary text-text-secondary font-medium rounded-lg transition-colors"
         >
           Cancel
         </button>
@@ -215,3 +215,4 @@ const PollCreator = ({ onPollCreate, onCancel }) => {
 };
 
 export default PollCreator;
+

@@ -36,7 +36,7 @@ const SearchSuggestions = ({
   };
 
   return (
-    <div className="absolute top-full mt-2 w-full bg-white dark:bg-gray-900 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[500px] overflow-y-auto">
+    <div className="absolute top-full mt-2 w-full bg-bg-secondary dark:bg-gray-900 rounded-lg shadow-2xl border border-border dark:border-gray-700 overflow-hidden z-50 max-h-[500px] overflow-y-auto">
       {loading ? (
         <div className="flex items-center justify-center py-8">
           <Icon
@@ -49,9 +49,9 @@ const SearchSuggestions = ({
         <>
           {/* Search History */}
           {!query && historyItems.length > 0 && (
-            <div className="border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800">
-                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <div className="border-b border-border dark:border-gray-700">
+              <div className="flex items-center justify-between px-4 py-2 bg-bg-primary dark:bg-gray-800">
+                <span className="text-sm font-semibold text-text-secondary dark:text-gray-300">
                   Recent Searches
                 </span>
                 <button
@@ -65,14 +65,14 @@ const SearchSuggestions = ({
                 <button
                   key={index}
                   onClick={() => onSelect(item)}
-                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left group"
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-bg-primary dark:hover:bg-gray-800 transition-colors text-left group"
                 >
                   <Icon
                     icon="mdi:history"
                     width={20}
                     className="text-gray-400"
                   />
-                  <span className="flex-1 text-gray-900 dark:text-gray-100">
+                  <span className="flex-1 text-text-primary dark:text-gray-100">
                     {item}
                   </span>
                   <button
@@ -89,8 +89,8 @@ const SearchSuggestions = ({
           {/* Suggestions */}
           {query && suggestions.length > 0 && (
             <div>
-              <div className="px-4 py-2 bg-gray-50 dark:bg-gray-800">
-                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <div className="px-4 py-2 bg-bg-primary dark:bg-gray-800">
+                <span className="text-sm font-semibold text-text-secondary dark:text-gray-300">
                   Suggestions
                 </span>
               </div>
@@ -102,23 +102,23 @@ const SearchSuggestions = ({
                     onClick={() =>
                       onSelect(suggestion.query || suggestion.name)
                     }
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-bg-primary dark:hover:bg-gray-800 transition-colors text-left"
                   >
                     <div className={`${iconData.color}`}>
                       <Icon icon={iconData.icon} width={20} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-gray-900 dark:text-gray-100 truncate">
+                      <p className="text-text-primary dark:text-gray-100 truncate">
                         {suggestion.name || suggestion.title}
                       </p>
                       {suggestion.subtitle && (
-                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                        <p className="text-sm text-text-muted dark:text-gray-400 truncate">
                           {suggestion.subtitle}
                         </p>
                       )}
                     </div>
                     {suggestion.count && (
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-text-muted dark:text-gray-400">
                         {suggestion.count} results
                       </span>
                     )}
@@ -139,7 +139,7 @@ const SearchSuggestions = ({
               <p className="text-gray-600 dark:text-gray-400 text-center">
                 No suggestions found for "{query}"
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-500 text-center mt-1">
+              <p className="text-sm text-text-muted dark:text-text-muted text-center mt-1">
                 Press Enter to search anyway
               </p>
             </div>
@@ -156,7 +156,7 @@ const SearchSuggestions = ({
               <p className="text-gray-600 dark:text-gray-400 text-center">
                 Start typing to search
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-500 text-center mt-1">
+              <p className="text-sm text-text-muted dark:text-text-muted text-center mt-1">
                 Try searching for posts, users, or tags
               </p>
             </div>
@@ -168,3 +168,4 @@ const SearchSuggestions = ({
 };
 
 export default SearchSuggestions;
+

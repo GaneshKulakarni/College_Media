@@ -12,13 +12,13 @@ const NotificationDropdown = ({ notifications, onClose }) => {
   };
 
   return (
-    <div className="absolute right-0 mt-2 w-96 bg-white dark:bg-gray-900 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
+    <div className="absolute right-0 mt-2 w-96 bg-bg-secondary dark:bg-gray-900 rounded-lg shadow-2xl border border-border dark:border-gray-700 overflow-hidden z-50">
       {/* Header */}
-      <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-gray-50 dark:bg-gray-800">
-        <h3 className="font-semibold text-gray-900 dark:text-white">
+      <div className="px-4 py-3 border-b border-border dark:border-gray-700 flex items-center justify-between bg-bg-primary dark:bg-gray-800">
+        <h3 className="font-semibold text-text-primary dark:text-white">
           Notifications
           {unreadCount > 0 && (
-            <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+            <span className="ml-2 text-sm text-text-muted dark:text-gray-400">
               ({unreadCount} new)
             </span>
           )}
@@ -43,10 +43,10 @@ const NotificationDropdown = ({ notifications, onClose }) => {
               width={48} 
               className="text-gray-400 dark:text-gray-600 mb-3"
             />
-            <p className="text-gray-500 dark:text-gray-400 text-center">
+            <p className="text-text-muted dark:text-gray-400 text-center">
               No notifications yet
             </p>
-            <p className="text-sm text-gray-400 dark:text-gray-500 text-center mt-1">
+            <p className="text-sm text-gray-400 dark:text-text-muted text-center mt-1">
               We'll notify you when something happens
             </p>
           </div>
@@ -65,7 +65,7 @@ const NotificationDropdown = ({ notifications, onClose }) => {
 
       {/* Footer */}
       {notifications.length > 0 && (
-        <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <div className="px-4 py-3 border-t border-border dark:border-gray-700 bg-bg-primary dark:bg-gray-800">
           <Link
             to="/notifications"
             onClick={onClose}
@@ -81,3 +81,4 @@ const NotificationDropdown = ({ notifications, onClose }) => {
 };
 
 export default NotificationDropdown;
+

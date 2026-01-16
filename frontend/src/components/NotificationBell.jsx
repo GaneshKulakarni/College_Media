@@ -41,7 +41,7 @@ const NotificationBell = () => {
         <Icon 
           icon="mdi:bell" 
           width={24} 
-          className="text-gray-700 dark:text-gray-300"
+          className="text-text-secondary dark:text-gray-300"
         />
         
         {unreadCount > 0 && (
@@ -65,3 +65,4 @@ const NotificationBell = () => {
 };
 
 export default NotificationBell;
+

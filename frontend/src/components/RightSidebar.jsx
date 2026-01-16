@@ -57,7 +57,7 @@ function RightSidebar() {
   return (
     <div className="lg:col-span-1 space-y-6">
       {/* Friend Suggestions */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+      <div className="bg-bg-secondary dark:bg-slate-800 rounded-2xl shadow-sm border border-border dark:border-slate-700 p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg">
             Friend Suggestions
@@ -91,7 +91,7 @@ function RightSidebar() {
       </div>
 
       {/* Trending Now */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+      <div className="bg-bg-secondary dark:bg-slate-800 rounded-2xl shadow-sm border border-border dark:border-slate-700 p-5">
         <div className="flex items-center mb-4">
           <svg
             className="w-5 h-5 text-orange-500 mr-2"
@@ -124,7 +124,7 @@ function RightSidebar() {
       {/* Profile Activity */}
       <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-sm border border-indigo-700 p-5 text-white">
         <h3 className="font-bold text-lg mb-3">Profile Activity</h3>
-        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-3">
+        <div className="bg-bg-secondary/10 backdrop-blur-sm rounded-xl p-4 mb-3">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <img
@@ -174,7 +174,7 @@ function RightSidebar() {
       </div>
 
       {/* Online Friends */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+      <div className="bg-bg-secondary dark:bg-slate-800 rounded-2xl shadow-sm border border-border dark:border-slate-700 p-5">
         <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg mb-4">
           Online Friends
         </h3>
@@ -202,3 +202,4 @@ function RightSidebar() {
 }
 
 export default RightSidebar;
+

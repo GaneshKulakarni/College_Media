@@ -17,7 +17,7 @@ const ProfileMenu = ({setIsProfileOpen}) => {
     };
     
     return (
-        <div className="bg-white rounded-md shadow-xl p-2">
+        <div className="bg-bg-secondary rounded-md shadow-xl p-2">
             <div className="flex flex-col">
                 <button onClick={handleProfileClick} className="flex justify-between rounded items-center gap-2 cursor-pointer hover:bg-neutral-200 py-2 px-4">
                     <CiUser />

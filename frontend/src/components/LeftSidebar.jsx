@@ -150,12 +150,12 @@ function LeftSidebar() {
 
   return (
     <aside 
-      className="fixed left-0 top-0 h-screen w-48 bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 z-40 flex flex-col"
+      className="fixed left-0 top-0 h-screen w-48 bg-bg-secondary dark:bg-slate-800 border-r border-border dark:border-slate-700 z-40 flex flex-col"
       role="navigation"
       aria-label="Sidebar navigation"
     >
       {/* Logo */}
-      <div className="p-5 border-b border-gray-200 dark:border-slate-700">
+      <div className="p-5 border-b border-border dark:border-slate-700">
         <div className="flex items-center justify-center">
           <img
             src={collegeMediaLogo}
@@ -175,14 +175,14 @@ function LeftSidebar() {
               className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative ${
                 location.pathname === item.path
                   ? "bg-gray-100 dark:bg-slate-700 font-semibold"
-                  : "hover:bg-gray-50 dark:hover:bg-slate-700 font-normal"
+                  : "hover:bg-bg-primary dark:hover:bg-slate-700 font-normal"
               }`}
               aria-label={item.label}
               aria-current={location.pathname === item.path ? "page" : undefined}
             >
               <div className="relative">
                 <span 
-                  className={location.pathname === item.path ? "text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"}
+                  className={location.pathname === item.path ? "text-text-primary dark:text-white" : "text-text-secondary dark:text-gray-300 group-hover:text-text-primary dark:group-hover:text-white"}
                   aria-hidden="true"
                 >
                   {item.icon}
@@ -198,8 +198,8 @@ function LeftSidebar() {
               </div>
               <span className={`text-sm ${
                 location.pathname === item.path
-                  ? "text-gray-900 dark:text-white font-semibold"
-                  : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                  ? "text-text-primary dark:text-white font-semibold"
+                  : "text-text-secondary dark:text-gray-300 group-hover:text-text-primary dark:group-hover:text-white"
               }`}>
                 {item.label}
               </span>
@@ -207,34 +207,34 @@ function LeftSidebar() {
           ))}
         </div>
         
-        <hr className="my-3 border-gray-200 dark:border-slate-600" aria-hidden="true" />
+        <hr className="my-3 border-border dark:border-slate-600" aria-hidden="true" />
         
         <div className="space-y-1">
           <Link 
             to="/more" 
-            className="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-slate-700 group"
+            className="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 hover:bg-bg-primary dark:hover:bg-slate-700 group"
             aria-label="More options"
           >
-            <svg className="w-6 h-6 text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="w-6 h-6 text-text-secondary dark:text-gray-300 group-hover:text-text-primary dark:group-hover:text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-            <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">More</span>
+            <span className="text-sm text-text-secondary dark:text-gray-300 group-hover:text-text-primary dark:group-hover:text-white">More</span>
           </Link>
         </div>
       </nav>
 
       {/* Bottom Section */}
-      <div className="p-3 border-t border-gray-200 dark:border-slate-700">
+      <div className="p-3 border-t border-border dark:border-slate-700">
         <Link 
           to="/settings" 
-          className="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-slate-700 group"
+          className="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 hover:bg-bg-primary dark:hover:bg-slate-700 group"
           aria-label="Settings"
         >
-          <svg className="w-6 h-6 text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+          <svg className="w-6 h-6 text-text-secondary dark:text-gray-300 group-hover:text-text-primary dark:group-hover:text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">Settings</span>
+          <span className="text-sm text-text-secondary dark:text-gray-300 group-hover:text-text-primary dark:group-hover:text-white">Settings</span>
         </Link>
       </div>
     </aside>
@@ -242,3 +242,4 @@ function LeftSidebar() {
 }
 
 export default LeftSidebar;
+
