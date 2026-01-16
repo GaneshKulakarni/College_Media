@@ -115,22 +115,22 @@ export const messagesApi = {
 export const moderationApi = {
   // Submit a report (regular users)
   submitReport: (data) => apiClient.post('/reports', data),
-  
+
   // Get all reports (admin only)
   getReports: (params) => apiClient.get('/admin/reports', { params }),
-  
+
   // Get single report details (admin only)
   getReportDetails: (reportId) => apiClient.get(`/admin/reports/${reportId}`),
-  
+
   // Take action on a report (admin only)
   takeAction: (reportId, data) => apiClient.put(`/admin/reports/${reportId}/action`, data),
-  
+
   // Bulk action on multiple reports (admin only)
   bulkAction: (data) => apiClient.post('/admin/reports/bulk-action', data),
-  
+
   // Submit appeal for moderation action
   submitAppeal: (data) => apiClient.post('/appeals', data),
-  
+
   // Get moderation statistics (admin only)
   getStatistics: () => apiClient.get('/admin/statistics/reports'),
 };
@@ -164,6 +164,15 @@ export const pollsApi = {
   delete: (id) => apiClient.delete(`/polls/${id}`),
 };
 
+// Collections endpoints
+export const collectionsApi = {
+  getAll: () => apiClient.get('/collections'),
+  create: (data: any) => apiClient.post('/collections', data),
+  addPost: (collectionId: string, postId: string) => apiClient.post('/collections/add-post', { collectionId, postId }),
+  removePost: (collectionId: string, postId: string) => apiClient.post('/collections/remove-post', { collectionId, postId }),
+  delete: (id: string) => apiClient.delete(`/collections/${id}`),
+};
+
 // Export all APIs
 export default {
   auth: authApi,
@@ -176,4 +185,5 @@ export default {
   messages: messagesApi,
   moderation: moderationApi,
   polls: pollsApi,
+  collections: collectionsApi,
 };

@@ -1,5 +1,6 @@
 export interface User {
     id: string;
+    _id?: string;
     username: string;
     email: string;
     profilePicture?: string;
@@ -12,6 +13,7 @@ export interface User {
 
 export interface Post {
     id: string;
+    _id: string;
     user: User;
     caption: string;
     imageUrl?: string;
@@ -59,4 +61,15 @@ export interface Notification {
     isRead: boolean;
     timestamp: string;
     message?: string;
+}
+
+export interface Collection {
+    _id: string;
+    name: string;
+    description?: string;
+    color: string;
+    isPublic: boolean;
+    posts: string[] | Post[];
+    createdAt: string;
+    updatedAt: string;
 }

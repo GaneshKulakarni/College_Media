@@ -7,6 +7,7 @@ import { usePollByPost } from "../hooks/usePolls";
 import ProgressiveImage from "./ProgressiveImage";
 import useOptimisticUpdate from "../hooks/useOptimisticUpdate";
 import { Post as IPost } from "../types";
+import BookmarkButton from "./BookmarkButton";
 
 interface PostProps {
   post: IPost;
@@ -133,6 +134,10 @@ const Post: React.FC<PostProps> = ({
             <FaLink />
             {copiedLink === post.id ? t('post.linkCopied') : t('post.copyLink')}
           </button>
+
+          <div className="ml-auto">
+            <BookmarkButton postId={post.id} />
+          </div>
         </div>
 
         {/* Caption */}
@@ -146,4 +151,3 @@ const Post: React.FC<PostProps> = ({
 };
 
 export default Post;
-
