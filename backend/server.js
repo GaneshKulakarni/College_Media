@@ -42,6 +42,7 @@ const { notFound } = require("./middleware/errorMiddleware");
 const logger = require("./utils/logger");
 const liveStreamService = require("./services/liveStreamService");
 const initMongoSync = require("./listeners/mongoSync");
+const initEventConsumer = require("./listeners/eventConsumer");
 
 const resumeRoutes = require("./routes/resume");
 const uploadRoutes = require("./routes/upload");
@@ -99,6 +100,10 @@ initSignalingSockets(io);
 // Initialize Code Editor Sockets
 const initCodeEditorSockets = require("./sockets/codeEditor");
 initCodeEditorSockets(io);
+
+// Initialize Notification Sockets
+const initNotificationSockets = require("./sockets/notifications");
+initNotificationSockets(io);
 
 if (TRUST_PROXY) app.set("trust proxy", 1);
 app.disable("x-powered-by");
@@ -247,6 +252,8 @@ app.use("/api/auth", distributedRateLimit('auth'), require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/streams", require("./routes/streams"));
 app.use("/api/search", distributedRateLimit('global'), require("./routes/search"));
+app.use("/api/analytics", require("./routes/analytics"));
+app.use("/api/collections", require("./routes/collections"));
 app.use("/api/admin", distributedRateLimit('admin'), require("./routes/admin"));
 app.use("/api/resume", resumeRoutes);
 app.use("/api/upload", uploadRoutes);
@@ -305,6 +312,7 @@ const startServer = async () => {
   // Start Broadcasting Service
   liveStreamService.start();
   initMongoSync();
+  initEventConsumer(); // Added initEventConsumer() here
 
   const apolloServer = new ApolloServer({
     typeDefs,
