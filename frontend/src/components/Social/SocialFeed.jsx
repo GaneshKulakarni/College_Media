@@ -42,13 +42,22 @@ const mockPosts = [
 
 export default function SocialFeed() {
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-6 text-center">Social Feed</h2>
-      <div className="space-y-4">
-        {mockPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+    <section className="w-full flex justify-center">
+      <div className="w-full max-w-3xl px-4 sm:px-6 lg:px-8">
+        
+        <header className="py-6 border-b border-gray-200">
+          <h2 className="text-2xl font-semibold text-gray-900 text-center">
+            Social Feed
+          </h2>
+        </header>
+
+        <div className="py-6 space-y-6">
+          {mockPosts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+
       </div>
-    </div>
+    </section>
   );
 }
